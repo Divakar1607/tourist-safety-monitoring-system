@@ -1,1 +1,51 @@
+CREATE TABLE Tourist (
+    tourist_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100),
+    email VARCHAR(100),
+    phone VARCHAR(15),
+    digital_id VARCHAR(50)
+);
 
+CREATE TABLE Location (
+    location_id INT PRIMARY KEY AUTO_INCREMENT,
+    tourist_id INT,
+    latitude DECIMAL(10,8),
+    longitude DECIMAL(11,8),
+    timestamp DATETIME,
+    FOREIGN KEY (tourist_id) REFERENCES Tourist(tourist_id)
+);
+
+CREATE TABLE Incident (
+    incident_id INT PRIMARY KEY AUTO_INCREMENT,
+    tourist_id INT,
+    incident_type VARCHAR(100),
+    description TEXT,
+    incident_date DATETIME,
+    status VARCHAR(50),
+    FOREIGN KEY (tourist_id) REFERENCES Tourist(tourist_id)
+);
+
+CREATE TABLE SOS_Alert (
+    alert_id INT PRIMARY KEY AUTO_INCREMENT,
+    tourist_id INT,
+    alert_time DATETIME,
+    status VARCHAR(50),
+    FOREIGN KEY (tourist_id) REFERENCES Tourist(tourist_id)
+);
+
+CREATE TABLE Authority (
+    authority_id INT PRIMARY KEY AUTO_INCREMENT,
+    authority_name VARCHAR(100),
+    contact_number VARCHAR(15),
+    email VARCHAR(100)
+);
+
+CREATE TABLE Response (
+    response_id INT PRIMARY KEY AUTO_INCREMENT,
+    alert_id INT,
+    authority_id INT,
+    response_time DATETIME,
+    response_status VARCHAR(50),
+    FOREIGN KEY (alert_id) REFERENCES SOS_Alert(alert_id),
+    FOREIGN KEY (authority_id) REFERENCES Authority(authority_id)
+);
